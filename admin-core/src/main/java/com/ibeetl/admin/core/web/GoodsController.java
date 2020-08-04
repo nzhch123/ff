@@ -46,7 +46,11 @@ public class GoodsController {
     public void request(HttpServletResponse response, @RequestParam("name")String name, @RequestBody ReceiveGoods goods) throws IOException {
         List<Goods> all_goods=goods.getResult();
         for (int i = 0; i <all_goods.size() ; i++) {
-            goodservice.save(all_goods.get(i));
+            if (all_goods.get(i).getGoodsName()!=null)
+            {
+                goodservice.save(all_goods.get(i));
+            }
+
         }
 
         try {

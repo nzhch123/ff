@@ -1,16 +1,19 @@
 package com.ibeetl.admin.core.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.ibeetl.admin.core.util.ValidateConfig;
 import org.beetl.sql.core.annotatoin.AutoID;
-import org.beetl.sql.core.annotatoin.SeqID;
 
-import javax.validation.constraints.NotNull;
+import org.beetl.sql.core.annotatoin.Table;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name="goods")
 public class Goods extends BaseEntity{
-  @NotNull(message = "ID不能为空", groups = ValidateConfig.UPDATE.class)
-  @SeqID(name = ORACLE_CORE_SEQ_NAME)
-  @AutoID
+
+
   private long id;
   private long goodsId;
   private String statDate;
@@ -56,6 +59,8 @@ public class Goods extends BaseEntity{
   private String isNewstyle;
 
 
+  @Id
+  @GeneratedValue(strategy= GenerationType.IDENTITY)   //自增长
   public long getId() {
     return id;
   }

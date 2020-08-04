@@ -25,7 +25,7 @@ public class JasonConfig {
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
 		objectMapper.configure(SerializationFeature.INDENT_OUTPUT, true);
-		SimpleModule simpleModule = new SimpleModule("SimpleModule", 
+		SimpleModule simpleModule = new SimpleModule("SimpleModule",
 				Version.unknownVersion());
 		simpleModule.addSerializer(JsonResult.class, new CustomJsonResultSerializer());
 		objectMapper.registerModule(simpleModule);
@@ -57,7 +57,7 @@ public class JasonConfig {
 				gen.writeObjectField("count", query.getTotalRow());
 				gen.writeObjectField("data", query.getList());
 			}else {
-				
+
 				gen.writeObjectField("data", data);
 			}
 			gen.writeEndObject();
