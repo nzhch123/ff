@@ -72,14 +72,14 @@ public class UserConsoleService extends CoreBaseService<CoreUser> {
 			throw new PlatformException("保存用户信息失败,用户已经存在");
 		}
 		user.setCreateTime(new Date());
-		user.setState(GeneralStateEnum.ENABLE.getValue());
+		//user.setState(GeneralStateEnum.ENABLE.getValue());
 		user.setPassword(passwordEncryptService.password(user.getPassword()));
 		user.setDelFlag(DelFlagEnum.NORMAL.getValue());
 		userDao.insert(user, true);
-		if(StringUtils.isNotEmpty(user.getAttachmentId())){
-		    //更新附件详细信息,关联到这个用户
-		    fileService.updateFile(user.getAttachmentId(), User.class.getSimpleName(), String.valueOf(user.getId()));
-		}
+//		if(StringUtils.isNotEmpty(user.getAttachmentId())){
+//		    //更新附件详细信息,关联到这个用户
+//		    fileService.updateFile(user.getAttachmentId(), User.class.getSimpleName(), String.valueOf(user.getId()));
+//		}
 		
 
 	}
@@ -159,7 +159,7 @@ public class UserConsoleService extends CoreBaseService<CoreUser> {
 		CoreUser user = new CoreUser();
 		user.setId(id);
 		user.setPassword(passwordEncryptService.password(password));
-		user.setUpdateTime(new Date());
+		//user.setUpdateTime(new Date());
 		return userDao.updateTemplateById(user);
 	}
 
@@ -185,31 +185,31 @@ public class UserConsoleService extends CoreBaseService<CoreUser> {
 		sqlManager.insert(userRole);
 	}
 	
-	public List<UserExcelExportData> queryExcel(PageQuery<CoreUser> query) {
-		PageQuery<CoreUser> ret = userDao.queryByCondtion(query);
-		List<CoreUser> list = ret.getList();
-		OrgItem orgRoot = platformService.buildOrg();
-		List<UserExcelExportData> items = new ArrayList<>();
-		for(CoreUser user:list) {
-			UserExcelExportData userItem = new UserExcelExportData();
-			userItem.setCode(user.getCode());
-			userItem.setId(user.getId());
-			userItem.setName(user.getName());
-			CoreDict dict = dictService.findCoreDict(CoreDictType.USER_STATE,user.getState());
-			userItem.setStateText(dict.getName());
-			
-			if(StringUtils.isNotEmpty(user.getJobType1())){
-				dict = dictService.findCoreDict("job_type",user.getJobType1());
-				userItem.setJobType1Text(dict.getName());
-			}
-			
-			String orgName = orgRoot.findChild(user.getOrgId()).getName();
-			userItem.setOrgText(orgName);
-			items.add(userItem);
-			
-		}
-		return items;
-		
-	}
+//	public List<UserExcelExportData> queryExcel(PageQuery<CoreUser> query) {
+//		PageQuery<CoreUser> ret = userDao.queryByCondtion(query);
+//		List<CoreUser> list = ret.getList();
+//		OrgItem orgRoot = platformService.buildOrg();
+//		List<UserExcelExportData> items = new ArrayList<>();
+//		for(CoreUser user:list) {
+//			UserExcelExportData userItem = new UserExcelExportData();
+//			userItem.setCode(user.getCode());
+//			userItem.setId(user.getId());
+//			userItem.setName(user.getName());
+//			CoreDict dict = dictService.findCoreDict(CoreDictType.USER_STATE,user.getState());
+//			userItem.setStateText(dict.getName());
+//
+////			if(StringUtils.isNotEmpty(user.getJobType1())){
+////				dict = dictService.findCoreDict("job_type",user.getJobType1());
+////				userItem.setJobType1Text(dict.getName());
+////			}
+//
+//			String orgName = orgRoot.findChild(user.getOrgId()).getName();
+//			userItem.setOrgText(orgName);
+//			items.add(userItem);
+//
+//		}
+//		return items;
+//
+//	}
 
 }

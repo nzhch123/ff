@@ -36,23 +36,23 @@ public class CoreUserService {
 		CoreUser query = new CoreUser();
 		query.setCode(userName);
 		query.setPassword(passwordEncryptService.password(password));
-		query.setState(GeneralStateEnum.ENABLE.getValue());
+		//query.setState(GeneralStateEnum.ENABLE.getValue());
 		CoreUser user =userDao.createLambdaQuery().andEq(CoreUser::getCode,userName).
 		    andEq(CoreUser::getPassword, passwordEncryptService.password(password)).single();
 		if(user==null) {
 		    throw new PlatformException("用户"+userName+"不存在或者密码错误");
 		}
-		if(!user.getState().equals(GeneralStateEnum.ENABLE.getValue())){
-		    throw new PlatformException("用户"+userName+"已经失效");
-		}
+//		if(!user.getState().equals(GeneralStateEnum.ENABLE.getValue())){
+//		    throw new PlatformException("用户"+userName+"已经失效");
+//		}
 		if(user.getDelFlag()==DelFlagEnum.DELETED.getValue()) {
 		    throw new PlatformException("用户"+userName+"已经删除");
 		}
 		
 		
-		List<CoreOrg>  orgs = getUserOrg(user.getId(),user.getOrgId());
+		//List<CoreOrg>  orgs = getUserOrg(user.getId(),user.getOrgId());
 		UserLoginInfo loginInfo = new UserLoginInfo();
-		loginInfo.setOrgs(orgs);
+		//loginInfo.setOrgs(orgs);
 		loginInfo.setUser(user);
 		return loginInfo;
 		
@@ -72,29 +72,29 @@ public class CoreUserService {
 	
 	
 	
-	public List<CoreUser> getAllUsersByRole(String role){
-		return userDao.getUserByRole(role);
-	}
-	
+//	public List<CoreUser> getAllUsersByRole(String role){
+//		return userDao.getUserByRole(role);
+//	}
+//
 	public CoreUser getUserByCode(String userName){
 		CoreUser user = new CoreUser();
 		user.setCode(userName);
 		return userDao.templateOne(user);
 	}
-	
+
 	public void update(CoreUser user){
 		userDao.updateById(user);
 	}
-	
+//
 	public CoreOrg getOrgById(Long orgId){
 		return orgDao.unique(orgId);
 	}
-	
+
 	public CoreUser getUserById(Long userId){
 		return userDao.unique(userId);
 	}
-	
-	public List<String> getOrgCode(List<Long> orgIds){
-		return orgDao.queryAllOrgCode(orgIds);
-	}
+//
+//	public List<String> getOrgCode(List<Long> orgIds){
+//		return orgDao.queryAllOrgCode(orgIds);
+//	}
 }

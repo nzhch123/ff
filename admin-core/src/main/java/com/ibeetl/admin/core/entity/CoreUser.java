@@ -46,13 +46,13 @@ public class CoreUser extends BaseEntity  {
 	private String name;
 
 	// 组织机构id
-
+	@JsonIgnore
 	private Long orgId;
 
 	// 密码
 	@JsonIgnore
 	private String password;
-
+	@JsonIgnore
 	protected Date trialTime;
 
 

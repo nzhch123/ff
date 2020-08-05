@@ -281,33 +281,33 @@ public class UserConsoleController {
 	}
 	
 	
-	@PostMapping(MODEL + "/excel/export.json")
-	@Function("user.export")
-	@ResponseBody
-	public JsonResult<String> export(HttpServletResponse response,UserQuery condtion) {
-		String excelTemplate ="excelTemplates/admin/user/user_collection_template.xls";
-		PageQuery<CoreUser> page = condtion.getPageQuery();
-		//取出全部符合条件的
-		page.setPageSize(Integer.MAX_VALUE);
-		page.setPageNumber(1);
-		page.setTotalRow(Integer.MAX_VALUE);
-		List<UserExcelExportData> users =userConsoleService.queryExcel(page);
-		try(InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(excelTemplate)) {
-	        if(is==null) {
-	        	throw new PlatformException("模板资源不存在："+excelTemplate);
-	        }
-	        FileItem item = fileService.createFileTemp("user_collection.xls");
-	        OutputStream os = item.openOutpuStream();
-	        Context context = new Context();
-            context.putVar("users", users);
-            JxlsHelper.getInstance().processTemplate(is, os, context);
-            //下载参考FileSystemContorller
-            return  JsonResult.success(item.getPath());
-	    } catch (IOException e) {
-			throw new PlatformException(e.getMessage());
-		}
-		
-	}
+//	@PostMapping(MODEL + "/excel/export.json")
+//	@Function("user.export")
+//	@ResponseBody
+//	public JsonResult<String> export(HttpServletResponse response,UserQuery condtion) {
+//		String excelTemplate ="excelTemplates/admin/user/user_collection_template.xls";
+//		PageQuery<CoreUser> page = condtion.getPageQuery();
+//		//取出全部符合条件的
+//		page.setPageSize(Integer.MAX_VALUE);
+//		page.setPageNumber(1);
+//		page.setTotalRow(Integer.MAX_VALUE);
+//		List<UserExcelExportData> users =userConsoleService.queryExcel(page);
+//		try(InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(excelTemplate)) {
+//	        if(is==null) {
+//	        	throw new PlatformException("模板资源不存在："+excelTemplate);
+//	        }
+//	        FileItem item = fileService.createFileTemp("user_collection.xls");
+//	        OutputStream os = item.openOutpuStream();
+//	        Context context = new Context();
+//            context.putVar("users", users);
+//            JxlsHelper.getInstance().processTemplate(is, os, context);
+//            //下载参考FileSystemContorller
+//            return  JsonResult.success(item.getPath());
+//	    } catch (IOException e) {
+//			throw new PlatformException(e.getMessage());
+//		}
+//
+//	}
 	
 	
 	

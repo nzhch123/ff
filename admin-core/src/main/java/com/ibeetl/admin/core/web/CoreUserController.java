@@ -55,15 +55,15 @@ public class CoreUserController {
 			return JsonResult.failMessage("用户名密码错");
 		}
 		CoreUser user = info.getUser();
-		CoreOrg currentOrg = info.getOrgs().get(0);
-		for (CoreOrg org : info.getOrgs()) {
-			if (org.getId() == user.getOrgId()) {
-				currentOrg = org;
-				break;
-			}
-		}
-
-		info.setCurrentOrg(currentOrg);
+//		CoreOrg currentOrg = info.getOrgs().get(0);
+//		for (CoreOrg org : info.getOrgs()) {
+//			if (org.getId() == user.getOrgId()) {
+//				currentOrg = org;
+//				break;
+//			}
+//		}
+//
+//		info.setCurrentOrg(currentOrg);
 		// 记录登录信息到session
 		this.platformService.setLoginUser(info.getUser(), info.getCurrentOrg(), info.getOrgs());
 		return JsonResult.success(info);
