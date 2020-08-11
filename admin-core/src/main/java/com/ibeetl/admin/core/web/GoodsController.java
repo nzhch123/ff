@@ -43,19 +43,26 @@ public class GoodsController {
     }
     @CrossOrigin
     @PostMapping ("/goods")
-    public void request(HttpServletResponse response, @RequestParam("name")String name, @RequestBody ReceiveGoods goods) throws IOException {
-        List<Goods> all_goods=goods.getResult();
-        for (int i = 0; i <all_goods.size() ; i++) {
-            if (all_goods.get(i).getGoodsName()!=null)
-            {
-                goodservice.save(all_goods.get(i));
-            }
+    public void request(HttpServletResponse response,  @RequestBody ReceiveGoods goods) throws IOException {
+        String name="mydata";
+        if (goods!=null){
+            List<Goods> all_goods=goods.getResult();
 
+            for (int i = 0; i <all_goods.size() ; i++) {
+                if (all_goods.get(i).getGoodsName()!=null)
+                {
+                    goodservice.save(all_goods.get(i));
+                }
+
+            }
         }
 
-        try {
 
-            createExcel(goods, name, response);
+        try {
+            if (goods!=null){
+                createExcel(goods, name, response);
+            }
+
 
         } catch (Exception e) {
             e.printStackTrace();

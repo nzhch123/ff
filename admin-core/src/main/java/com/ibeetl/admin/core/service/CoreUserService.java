@@ -1,5 +1,6 @@
 package com.ibeetl.admin.core.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.beetl.sql.core.SQLManager;
@@ -42,12 +43,19 @@ public class CoreUserService {
 		if(user==null) {
 		    throw new PlatformException("用户"+userName+"不存在或者密码错误");
 		}
+		if (user.getTrialTime()!=null){
+			if(user.getTrialTime().before(new Date()))
+			{
+				throw new PlatformException("用户已过期，请及时续费");
+			}
+		}
+
 //		if(!user.getState().equals(GeneralStateEnum.ENABLE.getValue())){
 //		    throw new PlatformException("用户"+userName+"已经失效");
 //		}
-		if(user.getDelFlag()==DelFlagEnum.DELETED.getValue()) {
-		    throw new PlatformException("用户"+userName+"已经删除");
-		}
+//		if(user.getDelFlag()==DelFlagEnum.DELETED.getValue()) {
+//		    throw new PlatformException("用户"+userName+"已经删除");
+//		}
 		
 		
 		//List<CoreOrg>  orgs = getUserOrg(user.getId(),user.getOrgId());
